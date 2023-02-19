@@ -7,9 +7,6 @@ services:
     command: go run index.go
     networks: [net]
     volumes: ['.:/root']
-    mem_limit: 512m
-    cpu_count: 1
-    cpu_percent: 10
 
   php-server:
     image: koolob/swoole-docker       # swoole php Repository
@@ -17,9 +14,6 @@ services:
     command: php index.php
     networks: [net]
     volumes: ['.:/root']
-    mem_limit: 512m
-    cpu_count: 1
-    cpu_percent: 10
 
   node-server:
     image: node                       # node js Official Repository
@@ -27,9 +21,6 @@ services:
     command: node index.js
     networks: [net]
     volumes: ['.:/root']
-    mem_limit: 512m
-    cpu_count: 1
-    cpu_percent: 10
 
   benchmark-client:
     image: williamyeh/wrk           # A minimal wrk image: Modern HTTP benchmarking tool
