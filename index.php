@@ -1,10 +1,15 @@
 <?php
 
-$http = new swoole_http_server('php-server', 8083);
+use OpenSwoole\Http\Server;
+use OpenSwoole\Http\Request;
+use OpenSwoole\Http\Response;
 
-$http->on('request', function($request, $response) {
-    $response->header('Content-Type', 'text/plain');
+$server = new OpenSwoole\HTTP\Server("php-server", 8083);
+
+$server->on("Request", function(Request $request, Response $response)
+{
+    $response->header("Content-Type", "text/plain");
     $response->end("Hello World PHP\n");
 });
 
-$http->start();
+$server->start();

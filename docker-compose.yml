@@ -9,7 +9,7 @@ services:
     volumes: ['.:/root']
 
   php-server:
-    image: koolob/swoole-docker       # swoole php Repository
+    image: openswoole/swoole          # swoole php Repository
     working_dir: /root
     command: php index.php
     networks: [net]
@@ -22,6 +22,13 @@ services:
     networks: [net]
     volumes: ['.:/root']
 
+  python-server:
+    image: python:3                   # python 3 Official Repository
+    working_dir: /root
+    command: python3 index.py
+    networks: [net]
+    volumes: ['.:/root']
+
   benchmark-client:
     image: williamyeh/wrk           # A minimal wrk image: Modern HTTP benchmarking tool
     networks: [net]
@@ -29,6 +36,7 @@ services:
       - go-server
       - node-server
       - php-server
+      - python-server
     entrypoint: >
         sh -c '
           sleep 3 &&
@@ -36,6 +44,7 @@ services:
           wrk -t12 -c400 -d30s http://go-server:8081 &&
           wrk -t12 -c400 -d30s http://node-server:8082 &&
           wrk -t12 -c400 -d30s http://php-server:8083 &&
+          wrk -t12 -c400 -d30s http://python-server:8084 &&
 
           echo "" &&
           echo "" &&
