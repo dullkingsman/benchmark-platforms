@@ -23,9 +23,9 @@ services:
     volumes: ['.:/root']
 
   python-server:
-    image: python:3                   # python 3 Official Repository
+    image: japronto/japronto       
     working_dir: /root
-    command: python3 index.py
+    command: --port 8084 --script index.py
     networks: [net]
     volumes: ['.:/root']
 

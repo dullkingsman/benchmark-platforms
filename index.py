@@ -1,15 +1,8 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from japronto import Application
 
-class MyServer(BaseHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header("Content-type", "text/plain")
-        self.end_headers()
-        self.wfile.write(bytes("Hello World Python\n", "utf-8"))
+def hello(request):
+    return request.Response(text='Hello world!')
 
-    # To silence the log message
-    def log_message(self, format, *args):
-        return
-
-httpd = HTTPServer(("python-server", 8084), MyServer)
-httpd.serve_forever()
+app = Application()
+app.router.add_route('/', hello)
+app.run(port=8084)
