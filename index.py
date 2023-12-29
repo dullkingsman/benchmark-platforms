@@ -1,8 +1,8 @@
 from japronto import Application
 
 def hello(request):
-    return request.Response(text='Hello world!')
+    return request.Response(text='Hello world!\n')
 
 app = Application()
 app.router.add_route('/', hello)
-app.run(port=8084)
+app.run(port=8085)

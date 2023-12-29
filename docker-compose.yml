@@ -22,6 +22,13 @@ services:
     networks: [net]
     volumes: ['.:/root']
 
+  bun-server:
+    image: oven/bun                       # bun Official Repository
+    working_dir: /root
+    command: bun index_bun.js
+    networks: [net]
+    volumes: ['.:/root']
+
   python-server:
     image: japronto/japronto       
     working_dir: /root
@@ -35,6 +42,7 @@ services:
     depends_on:
       - go-server
       - node-server
+      - bun-server
       - php-server
       - python-server
     entrypoint: >
@@ -43,8 +51,9 @@ services:
 
           wrk -t12 -c400 -d30s http://go-server:8081 &&
           wrk -t12 -c400 -d30s http://node-server:8082 &&
-          wrk -t12 -c400 -d30s http://php-server:8083 &&
-          wrk -t12 -c400 -d30s http://python-server:8084 &&
+          wrk -t12 -c400 -d30s http://bun-server:8083 &&
+          wrk -t12 -c400 -d30s http://php-server:8084 &&
+          wrk -t12 -c400 -d30s http://python-server:8085 &&
 
           echo "" &&
           echo "" &&
